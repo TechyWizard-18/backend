@@ -1,18 +1,18 @@
-# Use base image with Java 24 and Maven pre-installed
-FROM maven:3.9.6-eclipse-temurin-24
+# ✅ Use a working Maven + Java 17 image
+FROM maven:3.9.6-eclipse-temurin-17
 
 # Set working directory
 WORKDIR /app
 
-# Copy pom and source files
+# Copy pom.xml and source files
 COPY pom.xml .
 COPY src ./src
 
-# Build the application
+# Build the Spring Boot app
 RUN mvn clean package -DskipTests
 
-# Expose port (Render will override with $PORT)
+# Expose port (Render will automatically use $PORT)
 EXPOSE 8080
 
-# Run the application
+# Run the generated jar file
 CMD ["sh", "-c", "java -jar target/*.jar"]
